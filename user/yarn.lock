@@ -16,9 +16,9 @@ array-flatten@1.1.1:
   integrity sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==
 
 async@^3.2.2:
-  version "3.2.3"
-  resolved "https://registry.npmmirror.com/async/-/async-3.2.3.tgz"
-  integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.5.tgz#ebd52a8fdaf7a2289a24df399f8d8485c8a46b66"
+  integrity sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==
 
 bignumber.js@9.0.0:
   version "9.0.0"
@@ -142,7 +142,7 @@ etag@~1.8.1:
 
 express-jwt@^6.1.1:
   version "6.1.2"
-  resolved "https://registry.npmmirror.com/express-jwt/-/express-jwt-6.1.2.tgz"
+  resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-6.1.2.tgz#4a6cc11d1dcff6f23126dd79ec5b2b441333e78b"
   integrity sha512-l5dlf5lNM/1EODMsJGfHn1VnrhhsUYEetzrKFStJZLjFQXtR+HGdBiW+jUNZ+ISsFe+h7Wl/hQKjLrY2TX0Qkg==
   dependencies:
     async "^3.2.2"
@@ -152,7 +152,7 @@ express-jwt@^6.1.1:
 
 express-unless@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmmirror.com/express-unless/-/express-unless-1.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/express-unless/-/express-unless-1.0.0.tgz#ecd1c354c5ccf7709a8a17ece617934e037cccd8"
   integrity sha512-zXSSClWBPfcSYjg0hcQNompkFN/MxQQ53eyrzm9BYgik2ut2I7PxAf2foVqBRMYCwWaZx/aWodi+uk76npdSAw==
 
 express@^4.18.1:
@@ -276,7 +276,7 @@ isarray@~1.0.0:
 
 jsonwebtoken@^8.1.0, jsonwebtoken@^8.5.1:
   version "8.5.1"
-  resolved "https://registry.npmmirror.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz"
+  resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
   integrity sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==
   dependencies:
     jws "^3.2.2"
@@ -344,7 +344,7 @@ lodash.once@^4.0.0:
 
 lodash@^4.17.21:
   version "4.17.21"
-  resolved "https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 media-typer@0.3.0:

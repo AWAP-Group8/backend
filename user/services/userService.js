@@ -61,11 +61,12 @@ userService.register = async (req, res) => {
         if (err) {
             console.log(err)
             data.success = false
-            data.code = 'DATABASE INSERTED FAILED'
-            data.msg = 'database inserted failed'
+            data.code = 'REGISTERED FAILED'
+            data.msg = 'registered failed'
         } else {
             data.success = true
-            data.msg = 'database inserted successfully'
+            data.code = 'REGISTERED SUCCESSFULLY'
+            data.msg = 'registered successfully'
         }
         res.send(data)
     })
@@ -74,15 +75,20 @@ userService.register = async (req, res) => {
 // Login
 userService.login = (req, res) => {
     const { username, password } = req.query
-    const sql = `select * from user where username = '${username}' or stuNo = '${username}'`
+    const sql = `select * from user where username = '${username}' or email = '${username}'`
     connection.query(sql, (err, result) => {
         const data = {}
         if (err) {
-            setInternalError(data)
+            data.success = false
+            data.msg = 'login failed'
+            data.code = 'LOGIN FAILED'
+            data.data = null
         } else {
             // result.length === 0, means account does not exit
             if (result.length === 0) {
-                setData(data, false, 'account does not exist', 'Account does not exist!')
+                data.success = false
+                data.msg = 'account does not exist'
+                data.code = 'Account DOES NOT EXIST'
                 data.data = null
                 res.send(data)
                 return
@@ -91,7 +97,11 @@ userService.login = (req, res) => {
             if (truePass === password) {
                 data.success = true
                 data.msg = 'login successfully'
-                const token = createToken(req.query)
+                data.code = 'LOGIN SUCCESSFULLY'
+                const token = createToken({
+                    username: result[0].username,
+                    email: result[0].email
+                })
                 delete result[0].password
                 data.data = {
                     token,
@@ -100,6 +110,7 @@ userService.login = (req, res) => {
             } else {
                 data.success = false
                 data.msg = 'incorrect password'
+                data.code = 'INCORRECT PASSWORD'
                 data.data = null
             }
         }
