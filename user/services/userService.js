@@ -29,7 +29,7 @@ const deGenSign = (sign) => {
 userService.register = async (req, res) => {
     let { username, password, email } = req.body
     // if username have already exit
-    const findUserSql = `select username from user where username = '${username}'`
+    const findUserSql = `select username from users_management where username = '${username}'`
     const userList = await asyncQuery(findUserSql)
     // userList.length > 0 means username duplicating
     if (userList.length > 0) {
@@ -42,7 +42,7 @@ userService.register = async (req, res) => {
     }
 
     // if email have already exit
-    const findEmailSql = `select email from user where email = '${email}'`
+    const findEmailSql = `select email from users_management where email = '${email}'`
     const emailList = await asyncQuery(findEmailSql)
     // emailList.length > 0 means email has been registered
     if (emailList.length > 0) {
@@ -55,7 +55,7 @@ userService.register = async (req, res) => {
     }
 
     password = genSign(password)
-    const insertSql = `insert into user (username, password, email) values ('${username}', '${password}', '${email}')`
+    const insertSql = `insert into users_management (username, password, email) values ('${username}', '${password}', '${email}')`
     connection.query(insertSql, (err, result) => {
         const data = {}
         if (err) {
@@ -75,7 +75,7 @@ userService.register = async (req, res) => {
 // Login
 userService.login = (req, res) => {
     const { username, password } = req.query
-    const sql = `select * from user where username = '${username}' or email = '${username}'`
+    const sql = `select * from users_management where username = '${username}' or email = '${username}'`
     connection.query(sql, (err, result) => {
         const data = {}
         if (err) {
@@ -83,6 +83,7 @@ userService.login = (req, res) => {
             data.msg = 'login failed'
             data.code = 'LOGIN FAILED'
             data.data = null
+            console.log(err)
         } else {
             // result.length === 0, means account does not exit
             if (result.length === 0) {

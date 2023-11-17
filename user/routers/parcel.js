@@ -38,5 +38,28 @@ router.get('/findReceived',
     }
 )
 
+router.get('/findAllCount',
+    (req, res) => {
+        parcelService.findAllCount(req, res)
+    }
+)
+
+router.get('/findSentCount',
+    (req, res) => {
+        parcelService.findSentCount(req, res)
+    }
+)
+
+router.get('/findReceivedCount',
+    (req, res) => {
+        parcelService.findReceivedCount(req, res)
+    }
+)
+
+router.get('/locker',
+    (req, res) => {
+        parcelService.Locker(req, res)
+    }
+)
 
 module.exports = router

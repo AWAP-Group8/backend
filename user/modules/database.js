@@ -1,13 +1,17 @@
 const mysql = require("mysql")
+const fs = require("fs")
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: 'gogoship-database.mysql.database.azure.com',
     port: '3306',
-    user: 'root',
-    password: 'Kajaanintie32',
-    database: 'pkt-consumer'
+    user: 'gogoshiproot',
+    password: 'AWAP-Group8',
+    database: 'gogoship',
+    ssl: {
+        ca: fs.readFileSync(__dirname + '/DigiCertGlobalRootCA.crt.pem')
+    }
 });
 function init() {
-    
+
     global.connection = connection
     connection.connect({}, (err) => {
         if (err !== null)
@@ -16,6 +20,6 @@ function init() {
 }
 
 module.exports.init = init
-module.exports.getConnection = function() {
+module.exports.getConnection = function () {
     return connection
 }
