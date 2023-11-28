@@ -14,5 +14,11 @@ router.get('/login',
     }
 )
 
+router.post('/delete',
+    (req, res) => {
+        userService.delete(req, res)
+    },
+)
+
 
 module.exports = router

@@ -1,9 +1,6 @@
 const userService = {}
-const database = require('../modules/database')
-const { createToken } = require('../utils/jwt')
-const connection = database.getConnection()
-const util = require('util')
-const asyncQuery = util.promisify(connection.query).bind(connection)
+const { createToken, resolveToken } = require('../utils/jwt')
+const { asyncQuery } = require('../modules/database')
 
 const crypto = require("crypto")
 const genSign = (orignValue) => {
@@ -117,6 +114,25 @@ userService.login = (req, res) => {
         }
         res.send(data)
     })
+}
+
+userService.delete = async (req, res) => {
+    const email = resolveToken(req.headers.token).email
+    const delSql = `delete from users_management where email = '${email}'`
+    const data = {}
+    try {
+        await asyncQuery(delSql)
+        data.success = true
+        data.code = 'DELETE SUCCESSFULLY'
+        data.msg = 'delete successfully'
+    } catch (e) {
+        data.success = true
+        data.code = 'DELETE FAILED'
+        data.msg = 'delete failed'
+        console.log(e)
+    } finally {
+        res.send(data)
+    }
 }
 
 module.exports = userService
