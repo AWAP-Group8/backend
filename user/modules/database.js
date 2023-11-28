@@ -19,7 +19,11 @@ function init() {
     })
 }
 
+const util = require('util')
+const asyncQuery = util.promisify(connection.query).bind(connection)
+
 module.exports.init = init
 module.exports.getConnection = function () {
     return connection
 }
+module.exports.asyncQuery = asyncQuery

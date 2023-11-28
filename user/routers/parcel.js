@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const parcelService = require('../services/parcelService')
-const { resolveToken } = require('../utils/jwt')
 
 router.post('/send',
     (req, res) => {
@@ -9,16 +8,11 @@ router.post('/send',
     },
 )
 
-router.get('/test', (req, res) => {
-    console.log(req.headers.token)
-    res.send(resolveToken(req.headers.token))
-})
-
-// router.get('/login',
-//     (req, res) => {
-//         userService.login(req, res)
-//     }
-// )
+router.get('/findEmptyCabinet',
+    (req, res) => {
+        parcelService.findEmptyCabinet(req, res)
+    }
+)
 
 router.get('/findAll',
     (req, res) => {
@@ -59,6 +53,18 @@ router.get('/findReceivedCount',
 router.get('/locker',
     (req, res) => {
         parcelService.Locker(req, res)
+    }
+)
+
+router.get('/findTrackingNumber',
+    (req, res) => {
+        parcelService.findTrackingNumber(req, res)
+    }
+)
+
+router.get('/findHistory',
+    (req, res) => {
+        parcelService.findHistory(req, res)
     }
 )
 

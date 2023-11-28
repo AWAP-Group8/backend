@@ -1,15 +1,12 @@
 const parcelService = {}
-const database = require('../modules/database')
-const connection = database.getConnection()
-const util = require('util')
-const { resolveToken } = require('../utils/jwt')
-const asyncQuery = util.promisify(connection.query).bind(connection)
+const { asyncQuery } = require('../modules/database')
 
 parcelService.send = async (req, res) => {
     const {
         sender_name,
         sender_email,
         pickup_locker,
+        pickup_cabinet,
         receiver_name,
         receiver_email,
         length,
@@ -17,14 +14,17 @@ parcelService.send = async (req, res) => {
         height,
         mass,
         sender_locker,
+        sender_cabinet,
     } = req.body
 
     const tracking_number = orderTracking()
     const create_time = Date.now()
+    const code = await generateCode(pickup_locker)
     const insertObj = {
         sender_name,
         sender_email,
         pickup_locker,
+        pickup_cabinet,
         receiver_name,
         receiver_email,
         length,
@@ -32,14 +32,17 @@ parcelService.send = async (req, res) => {
         height,
         mass,
         sender_locker,
+        sender_cabinet,
         tracking_number,
         create_time,
+        parcel_status: 'waiting for sending',
+        sender_code: code,
     }
     const keyArr = Reflect.ownKeys(insertObj)
     const valueArr = keyArr.map(key => `'${insertObj[key]}'`)
     // [1,2,3] => '1,2,3'
     const insertSql = `insert into parcels_management (${keyArr.join(',')}) values (${valueArr.join(',')})`
-
+    const updateLockerSql = `update locker_management set code = '${code}' where locker = '${sender_locker}' and cabinet = '${sender_cabinet}'`
     function setTimeFormt(date) {
         return date < 10 ? '0' + date : date;
     }
@@ -59,11 +62,48 @@ parcelService.send = async (req, res) => {
         return tracking_number
     }
 
-    await asyncQuery(insertSql)
-    // todo
+    await Promise.allSettled([
+        asyncQuery(insertSql),
+        asyncQuery(updateLockerSql)
+    ])
+    const data = {}
+    data.success = true
+    data.msg = 'send a parcel sucessfully'
+    data.data = {
+        code
+    }
+    res.send(data)
+}
+
+async function generateCode(pickup_locker) {
+    let randomCode
+    let res
+    do {
+        randomCode = Math.floor(Math.random() * 9000) + 1000
+        const findSql = `select code from locker_management where locker = '${pickup_locker}' and code = '${randomCode}'`
+        res = await asyncQuery(findSql)
+    } while (res.length > 0)
+    return randomCode
+}
+
+parcelService.findEmptyCabinet = async (req, res) => {
+    const {
+        locker,
+    } = req.query
+    const findSql = `select cabinet from locker_management where locker = '${locker}' and cabinet_status = 'free' and code is null`
+    const result = await asyncQuery(findSql)
     const data = {}
     data.succees = true
-    data.msg = 'send a parcel sucessfully'
+    data.msg = 'find successfully'
+    data.data = {
+        list: result.map(data => {
+            const { cabinet } = data
+            return {
+                value: cabinet,
+                label: cabinet
+            }
+        })
+    }
     res.send(data)
 }
 
@@ -160,10 +200,6 @@ parcelService.Locker = async (req, res) => {
     const data = {}
     data.succees = true
     data.msg = 'find successfully'
-    // [
-    //     {  locker: 'A' },
-
-    // ]
     data.data = {
         locker: result.map(data => {
             const { locker } = data
@@ -177,16 +213,30 @@ parcelService.Locker = async (req, res) => {
 }
 
 parcelService.findTrackingNumber = async (req, res) => {
-    const tracking_number = req.body
+    const { tracking_number } = req.query
     const findSql = `select * from parcels_management where tracking_number = '${tracking_number}'`
     const result = await asyncQuery(findSql)
     const data = {}
     data.succees = true
     data.msg = 'find successfully'
     data.data = {
-        count: result[0].count
+        res: result[0]
     }
     res.send(data)
 }
+
+parcelService.findHistory = async (req, res) => {
+    const { tracking_number } = req.query
+    const findSql = `select * from parcel_histories where tracking_number = '${tracking_number}' order by create_time desc`
+    const result = await asyncQuery(findSql)
+    const data = {}
+    data.succees = true
+    data.msg = 'find successfully'
+    data.data = {
+        historyList: result
+    }
+    res.send(data)
+}
+
 
 module.exports = parcelService
