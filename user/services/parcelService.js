@@ -1,5 +1,6 @@
 const parcelService = {}
 const { asyncQuery } = require('../modules/database')
+const { resolveToken } = require('../utils/jwt')
 
 parcelService.send = async (req, res) => {
     const {
@@ -236,6 +237,22 @@ parcelService.findHistory = async (req, res) => {
         historyList: result
     }
     res.send(data)
+}
+
+parcelService.findCanPickupParcel = async (req, res) => {
+  const {
+      start
+  } = req.query
+  const email = resolveToken(req.headers.token).email
+  const findSql = `select * from parcels_management where receiver_email = '${email}' and parcel_status = 'waiting for picking up' order by create_time desc limit ${start * 10}, 10`
+  const result = await asyncQuery(findSql)
+  const data = {}
+  data.succees = true
+  data.msg = 'find successfully'
+  data.data = {
+      list: result
+  }
+  res.send(data)
 }
 
 

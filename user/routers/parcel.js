@@ -68,4 +68,10 @@ router.get('/findHistory',
     }
 )
 
+router.get('/findCanPickupParcel',
+    (req, res) => {
+        parcelService.findCanPickupParcel(req, res)
+    }
+)
+
 module.exports = router
