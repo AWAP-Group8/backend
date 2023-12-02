@@ -1,7 +1,9 @@
-const express = require("express")
+const express = require("express");
+const dotenv = require("dotenv");
 const cors = require('cors');
 const app = express();
-const port = 3000
+dotenv.config();
+const port = process.env.PORT || 3000;
 const expressjwt = require('express-jwt')
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,5 +51,5 @@ app.use('/locker', locker)
 const driver = require('./routers/driver')
 app.use('/driver', driver)
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`)
+    console.log(`server is running on port ${port}`)
 })
