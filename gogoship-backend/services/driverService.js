@@ -23,7 +23,8 @@ const deGenSign = (sign) => {
   return src
 }
 
-// Registration
+// Registration, this is not necessary based on requirements, if you don't want just ignore the registration
+// this registration will crypto driver's password, which is more secure
 driverService.register = async (req, res) => {
   let { driver_email, password } = req.body
   const findDriverSql = `select driver_email from driver_management where driver_email = '${driver_email}'`
@@ -55,7 +56,7 @@ driverService.register = async (req, res) => {
   })
 }
 
-// Login
+// 1. Login
 driverService.login = (req, res) => {
   const { driver_email, password } = req.query
   const sql = `SELECT * FROM driver_management WHERE driver_email = '${driver_email}'`
@@ -101,7 +102,7 @@ driverService.login = (req, res) => {
   })
 }
 
-//for the driver to see which cabinets are free at the selected parcel locker
+// 2.for the driver to see which cabinets are free at the selected parcel locker
 driverService.availableCabinets = async (req, res) => {
   const { locker } = req.query
   const findSql = `SELECT cabinet FROM locker_management WHERE locker = '${locker}' AND cabinet_status = 'free'`
@@ -118,7 +119,7 @@ driverService.availableCabinets = async (req, res) => {
 };
 
 // pickup parcels
-// 1.displays which cabinets in location have parcel to be picked up by the driver for delivery
+// 3.displays which cabinets in location have parcel to be picked up by the driver for delivery
 driverService.canDeliverCabinets = async (req, res) => {
   const { locker } = req.query
   const findSql = `SELECT cabinet FROM locker_management WHERE locker = '${locker}' AND parcel_status = 'waiting for dropping off'`
@@ -134,9 +135,9 @@ driverService.canDeliverCabinets = async (req, res) => {
   res.send(data)
 }
 
-//pickup parcels
-//2.open the cabinet and pick up the parcel
-//3.update the status of 'full' sender_cabinet to 'free', and update the status of 'waiting for sending' parcel_status to 'during transportation'
+// pickup parcels
+// 4.open the cabinet and pick up the parcel
+// 5.update the status of 'full' sender_cabinet to 'free', and update the status of 'waiting for sending' parcel_status to 'during transportation'
 driverService.pickupParcel = async (req, res) => {
   const { selectedLocker, selectedCabinet, code } = req.body;
   const findSql = `SELECT code, tracking_number FROM locker_management WHERE locker = '${selectedLocker}' AND cabinet = '${selectedCabinet}'`
@@ -169,9 +170,9 @@ driverService.pickupParcel = async (req, res) => {
   res.send(data)
 }
 
-//deliver parcels
-//2.open the cabinet and put the parcel in
-//3.update the status of 'free' pickup_cabinet to 'full', and update the status of 'during transportation' parcel_status to 'waiting for picking up'
+// deliver parcels
+// 6.open the cabinet and put the parcel in
+// 7.update the status of 'free' pickup_cabinet to 'full', and update the status of 'during transportation' parcel_status to 'waiting for picking up'
 driverService.deliverParcels = async (req, res) => {
   const { selectedLocker, selectedCabinet } = req.body;
   const findTrackingCodeSql = `SELECT tracking_number FROM locker_management WHERE locker = '${selectedLocker}' AND cabinet = '${selectedCabinet}'`
