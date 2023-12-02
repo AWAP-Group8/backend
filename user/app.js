@@ -8,6 +8,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(cors())
 const secret = 'pkt-management'
+const noNeedTokenList = [
+  '/user/login',
+  { url: '/user/register', methods: ['POST'] },
+  '/driver/login',
+  { url: '/driver/register', methods: ['POST'] },
+  /^\/locker\//
+]
 app.use(expressjwt({
     credentialsRequired: true,
     secret,
@@ -19,7 +26,7 @@ app.use(expressjwt({
         return null
     }
 }).unless({
-    path: ['/user/login', { url: '/user/register', methods: ['POST'] }]
+    path: noNeedTokenList
 }))
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -37,6 +44,10 @@ const user = require('./routers/user')
 app.use('/user', user)
 const parcel = require('./routers/parcel')
 app.use('/parcel', parcel)
+const locker = require('./routers/locker')
+app.use('/locker', locker)
+const driver = require('./routers/driver')
+app.use('/driver', driver)
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`)
 })

@@ -1,6 +1,6 @@
 const parcelService = {}
 const { asyncQuery } = require('../modules/database')
-const { resolveToken } = require('../utils/jwt')
+const { resolveToken, generateCode } = require('../utils')
 
 parcelService.send = async (req, res) => {
     const {
@@ -76,22 +76,11 @@ parcelService.send = async (req, res) => {
     res.send(data)
 }
 
-async function generateCode(pickup_locker) {
-    let randomCode
-    let res
-    do {
-        randomCode = Math.floor(Math.random() * 9000) + 1000
-        const findSql = `select code from locker_management where locker = '${pickup_locker}' and code = '${randomCode}'`
-        res = await asyncQuery(findSql)
-    } while (res.length > 0)
-    return randomCode
-}
-
 parcelService.findEmptyCabinet = async (req, res) => {
     const {
         locker,
     } = req.query
-    const findSql = `select cabinet from locker_management where locker = '${locker}' and cabinet_status = 'free' and code is null`
+    const findSql = `select cabinet from locker_management where locker = '${locker}' and reserved = 0`
     const result = await asyncQuery(findSql)
     const data = {}
     data.succees = true

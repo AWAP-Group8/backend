@@ -1,5 +1,5 @@
 const userService = {}
-const { createToken, resolveToken } = require('../utils/jwt')
+const { createToken, resolveToken } = require('../utils')
 const { asyncQuery } = require('../modules/database')
 
 const crypto = require("crypto")
