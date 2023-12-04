@@ -8,13 +8,29 @@ const expect = chai.expect;
 describe('User API', () => {
   let authToken; // Used to store the authentication token for testing protected routes
 
-  before((done) => {
-    app.listen(8081, () => {
-      console.log('Server is running.');
-      done();
-    });
-  });
+//   before((done) => {
+//     app.listen(8081, () => {
+//       console.log('Server is running.');
+//       done();
+//     });
+//   });
+let server;  // 用于保存服务器实例
 
+before((done) => {
+  server = app.listen(8081, () => {
+    console.log('Server is running on port 8081.');
+    done();
+  });
+});
+
+after((done) => {
+  server.close(() => {
+    console.log('Server is closed.');
+    setTimeout(() => {
+        done();
+      }, 1000);
+  });
+});
   // Test user registration
   describe('/POST user/register', () => {
     it('should register a new user', (done) => {
