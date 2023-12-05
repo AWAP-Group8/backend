@@ -35,17 +35,30 @@ lockerService.pickupParcel = async (req, res) => {
   console.log(lockerRes, codeRes)
   if (result.length === 0) {
     data.success = false
-    if (lockerRes.length > 0) {
-      data.code = 'WRONG CODE '
-      data.msg = 'You have entered the incorrect code'
-    } else if (codeRes.length !== 0) {
+    // if (lockerRes.length > 0) {
+    //   data.code = 'WRONG CODE '
+    //   data.msg = 'You have entered the incorrect code'
+    // } else if (codeRes.length !== 0) {
+    //   // don't tell user the right locker cause there maybe 2+ lockers matched
+    //   data.code = 'WRONG LOCKER'
+    //   data.msg = 'You have choosed the incorrect locker'
+    // } else {
+    //   data.code = 'WRONG INFO'
+    //   data.msg = 'You maybe entered wrong info'
+    // }
+    if (codeRes.length !== 0) {
       // don't tell user the right locker cause there maybe 2+ lockers matched
       data.code = 'WRONG LOCKER'
-      data.msg = 'You have choosed the incorrect locker'
+      data.msg = 'You have chosen the incorrect locker'
+    }
+    else if (lockerRes.length > 0) {
+      data.code = 'WRONG CODE '
+      data.msg = 'You have entered the incorrect code'
     } else {
       data.code = 'WRONG INFO'
       data.msg = 'You maybe entered wrong info'
     }
+
     res.send(data)
     return
   }
@@ -88,20 +101,34 @@ lockerService.sendParcel = async (req, res) => {
       asyncQuery(findSql)
     ]
   )
+  console.log(lockerRes, codeRes,result)
   const data = {}
   if (result.length === 0) {
     data.success = false
-    if (lockerRes.length > 0) {
-      data.code = 'WRONG CODE '
-      data.msg = 'You have entered the incorrect code'
-    } else if (codeRes.length !== 0) {
+    // if (lockerRes.length > 0) {
+    //   data.code = 'WRONG CODE '
+    //   data.msg = 'You have entered the incorrect code'
+    // } else if (codeRes.length !== 0) {
+    //   // don't tell user the right locker cause there maybe 2+ lockers matched
+    //   data.code = 'WRONG LOCKER'
+    //   data.msg = 'You have choosed the incorrect locker'
+    // } else {
+    //   data.code = 'WRONG INFO'
+    //   data.msg = 'You maybe entered wrong info'
+    // }
+    if (codeRes.length !== 0) {
       // don't tell user the right locker cause there maybe 2+ lockers matched
       data.code = 'WRONG LOCKER'
-      data.msg = 'You have choosed the incorrect locker'
-    } else {
+      data.msg = 'You have chosen the incorrect locker'
+    }
+    else if (lockerRes.length > 0) {
+      data.code = 'WRONG CODE '
+      data.msg = 'You have entered the incorrect code'
+    }  else {
       data.code = 'WRONG INFO'
       data.msg = 'You maybe entered wrong info'
     }
+
     res.send(data)
     return
   }
