@@ -122,14 +122,13 @@ driverService.availableCabinets = async (req, res) => {
 // 3.displays which cabinets in location have parcel to be picked up by the driver for delivery
 driverService.canDeliverCabinets = async (req, res) => {
   const { locker } = req.query
-  const findSql = `SELECT cabinet FROM locker_management WHERE locker = '${locker}' AND parcel_status = 'waiting for dropping off'`
-  const result = await asyncQuery(findSql)
-  const cabinets = result.map(item => item.cabinet)
+  const findSql = `select * from parcels_management where sender_locker = '${locker}' or pickup_locker = '${locker}'`
+  const result = await asyncQuery(findSql) 
   const data = {
     success: true,
     msg: 'find successfully',
     data: {
-      cabinets
+      result
     }
   }
   res.send(data)
