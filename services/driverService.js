@@ -191,8 +191,8 @@ driverService.deliverParcels = async (req, res) => {
   const parcelRes = await asyncQuery(findSql)
   const receiver_email = parcelRes[0].receiver_email
   const arrive_time = Date.now()
-  const updateSql = `update locker_management set cabinet_status = 'full', code = '${code}', parcel_status = 'waiting for picking up', arrive_time = '${arrive_time}' where locker = '${selectedLocker}' and cabinet = '${selectedCabinet}'`
-  const updateParcelSql = `update parcels_management set parcel_status = 'waiting for picking up', pickup_code = '${code}' where tracking_number = '${tracking_number}'`
+  const updateSql = `update locker_management set cabinet_status = 'full', code = '${code}', parcel_status = 'waiting for picking up' where locker = '${selectedLocker}' and cabinet = '${selectedCabinet}'`
+  const updateParcelSql = `update parcels_management set parcel_status = 'waiting for picking up', pickup_code = '${code}', arrive_time = '${arrive_time}' where tracking_number = '${tracking_number}'`
   await Promise.all([
     asyncQuery(updateSql),
     asyncQuery(updateParcelSql)
