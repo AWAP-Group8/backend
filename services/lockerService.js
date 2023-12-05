@@ -63,7 +63,8 @@ lockerService.closeCabinetDoorPickup = async (req, res) => {
   const result = await asyncQuery(findSql)
   const tracking_number = result[0].tracking_number
   const resetCabinet = `update locker_management set cabinet_status = 'free', code = NULL, parcel_status = NULL, tracking_number = NULL, reserved = 0 where locker = '${pickupLocker}' and cabinet = '${pickupCabinet}'`
-  const setParcelStatus = `update parcels_management set parcel_status = 'picked up successfully' where tracking_number = '${tracking_number}'`
+  const pickup_time = Date.now()
+  const setParcelStatus = `update parcels_management set parcel_status = 'picked up successfully', pickup_time = '${pickup_time}' where tracking_number = '${tracking_number}'`
   await Promise.all([
     asyncQuery(resetCabinet),
     asyncQuery(setParcelStatus)
