@@ -165,7 +165,7 @@ driverService.pickupParcel = async (req, res) => {
     asyncQuery(updateParcelSql)
   ])
   data.success = true
-  data.msg = 'pickup successfully'
+  data.msg = 'Driver picked up successfully'
   res.send(data)
 }
 
@@ -198,7 +198,7 @@ driverService.deliverParcels = async (req, res) => {
   ])
   await sendMail(receiver_email, code)
   data.success = true
-  data.msg = 'pickup successfully'
+  data.msg = 'Driver delivered successfully'
   res.send(data)
 };
 
