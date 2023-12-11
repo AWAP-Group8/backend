@@ -15,7 +15,7 @@ const noNeedTokenList = [
   { url: '/user/register', methods: ['POST'] },
   '/driver/login',
   { url: '/driver/register', methods: ['POST'] },
-  /^\/locker\//
+  /^\/locker\//,/^\/robot\//
 ]
 app.use(expressjwt({
     credentialsRequired: true,
@@ -50,6 +50,8 @@ const locker = require('./routers/locker')
 app.use('/locker', locker)
 const driver = require('./routers/driver')
 app.use('/driver', driver)
+const robot = require('./routers/robot')
+app.use('/robot', robot)
 app.listen(port, () => {
     console.log(`server is running on port ${port}`)
 })
