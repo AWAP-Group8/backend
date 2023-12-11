@@ -1,12 +1,12 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../app'); // Update the path based on your project structure
+const app = require('../app'); 
 
 chai.use(chaiHttp);
 const expect = chai.expect;
 
 describe('User API', () => {
-  let authToken; // Used to store the authentication token for testing protected routes
+  let authToken; 
 
 //   before((done) => {
 //     app.listen(8081, () => {
@@ -14,7 +14,7 @@ describe('User API', () => {
 //       done();
 //     });
 //   });
-let server;  // 用于保存服务器实例
+let server;
 
 before((done) => {
   server = app.listen(8081, () => {
