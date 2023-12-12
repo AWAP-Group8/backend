@@ -58,8 +58,6 @@ In this project, three parts of the front-end portion have been worked such as `
 
   ### Consumer service:
   This part we have added `register` and `login` functionality for users. After login, a user can `create parcel` according to his/her needs, `delete` own account, `track parcels`, `view the history` of receiving or `sending parcels` and users also `receive reminders` when there is a parcel waiting to be picked up. 
-  #### Functions:
-  User sign up: 
   
   ### Driver service:
   This application created for parcel delivery man called driver. Driver needs to `login` this website first. After login, driver can `select lockers`, `view which cabinets are empty`, choose which parcels need to be kept in the cabinet, which parcels need to be picked up for `delivery` and completing parcels pickup or keep driver must `change the parcel status`. After finishing driver has to `logout`.
@@ -86,7 +84,6 @@ In this project, three parts of the front-end portion have been worked such as `
 
 ## Testing
 - Unit tests are available in the `/tests` directory. Run `npm test` to execute the tests.
-
 
 ## Deployment:
 For deployment, we use `Microsoft Azure Cloud Service`
