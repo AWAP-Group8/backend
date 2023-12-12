@@ -95,6 +95,6 @@ For deployment, we use `Microsoft Azure Cloud Service`
 ### Step 4:
   When start application, run the following command:
    - cd server
-   - `node index.js`
-   - `cd ..`
-   - `npm start or yarn start`
+   - node index.js
+   - cd ..
+   - npm start or yarn start
