@@ -48,11 +48,11 @@ In this project, three parts of the front-end portion have been worked such as `
   ### Consumer service:
   This part we have added `register` and `login` functionality for users. After login, a user can `create parcel` according to his/her needs, `delete` own account, `track parcels`, `view the history` of receiving or `sending parcels` and users also `receive reminders` when there is a parcel waiting to be picked up. 
 
-  ### Consumer service:
-  This application created for parcel delivery man called driver. Driver needs to login this website first. After login, driver can select lockers, view which cabinets are empty, choose which parcels need to be kept in the cabinet, which parcels need to be picked up for delivery and completing parcels pickup or keep driver must change the parcel status. After finishing driver has to logout.
+  ### Driver service:
+  This application created for parcel delivery man called driver. Driver needs to `login` this website first. After login, driver can `select lockers`, `view which cabinets are empty`, choose which parcels need to be kept in the cabinet, which parcels need to be picked up for `delivery` and completing parcels pickup or keep driver must `change the parcel status`. After finishing driver has to `logout`.
 
   ### Touchscreen service
-  when user put or pick up the parcel in the specific locker where user use this touchscreen. User type cabinet number, sender code for parcel.
+  when user put or `pick up` the parcel in the specific locker where user use this touchscreen. User type `cabinet number`, `sender code` or `pickup code` for parcel and completing parcels send or pick up must `change the parcel status` and `free the cabinet`.
 
 ## Deployment:
 For deployment, we use `Microsoft Azure Cloud Service`
