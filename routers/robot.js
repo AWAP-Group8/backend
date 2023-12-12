@@ -27,4 +27,10 @@ router.get('/findAllParcels',
     },
 )
 
+router.post('/createParcel',
+    (req, res) => {
+        robotService.createParcel(req, res)
+    },
+)
+
 module.exports = router
